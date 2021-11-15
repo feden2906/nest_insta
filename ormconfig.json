@@ -2,9 +2,9 @@
   "type": "postgres",
   "host": "localhost",
   "port": 5432,
-  "username": "nestproject",
-  "password": "1234",
-  "database": "nestproject",
+  "username": "postgres",
+  "password": "postgres",
+  "database": "nest_project_alex",
   "entities": [
     "dist/shared/db/entities/**/*.entity.js"
   ],

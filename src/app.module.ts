@@ -11,17 +11,25 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { AuthMiddleware } from '@app/user/middlewares/auth.middleware';
 import { ArticleModule } from './article/article.module';
-import { FilesModule } from './files/files.module';
+import { AwsSdkModule } from "nest-aws-sdk";
+import { S3 } from "aws-sdk";
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
       useFactory: () => ({}),
     }),
+    AwsSdkModule.forRoot({
+      defaultServiceOptions: {
+        region: process.env.S3_BUCKET_REGION,
+        accessKeyId: process.env.S3_BUCKET_ACCESS_KEY_ID,
+        secretAccessKey: process.env.S3_BUCKET_SECRET_ACCESS_KEY,
+      },
+      services: [S3],
+    }),
     TagModule,
     UserModule,
     ArticleModule,
-    FilesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -34,3 +42,4 @@ export class AppModule implements NestModule {
     });
   }
 }
+

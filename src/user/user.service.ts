@@ -24,12 +24,14 @@ export class UserService {
     const userByUsername = await this.userRepository.findOne({
       username: createUserDto.username,
     });
+
     if (userByEmail || userByUsername) {
       throw new HttpException(
         'email or username are taken',
         HttpStatus.UNPROCESSABLE_ENTITY,
       );
     }
+
     const newUser = new UserEntity();
     Object.assign(newUser, createUserDto);
     return await this.userRepository.save(newUser);
@@ -88,6 +90,7 @@ export class UserService {
         email: user.email,
       },
       JWT_SECRET,
+      { expiresIn: '1d' }
     );
   }
 

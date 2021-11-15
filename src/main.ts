@@ -1,4 +1,5 @@
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+require('dotenv').config();
 
 if (!process.env.IS_TS_NODE) {
   require('module-alias/register');

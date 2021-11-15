@@ -3,11 +3,10 @@ import { UserEntity } from '@app/shared/db/entities/user/user.entity';
 import { CreateArticleDto } from '@app/article/dto/createArticle.dto';
 import { ArticleEntity } from '@app/shared/db/entities/article/article.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, getRepository, Repository } from 'typeorm';
+import { DeleteResult, getRepository, In, Repository } from "typeorm";
 import { ArticleResponseInterface } from '@app/article/types/articleResponse.interface';
 import slugify from 'slugify';
 import { ArticlesResponseInterface } from '@app/article/types/articlesResponse.interface';
-import { FilesService } from '@app/files/files.service';
 
 @Injectable()
 export class ArticleService {
@@ -15,9 +14,7 @@ export class ArticleService {
     @InjectRepository(ArticleEntity)
     private readonly articleRepository: Repository<ArticleEntity>,
     @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>,
-    @InjectRepository(ArticleEntity)
-    private fileService: FilesService,
+    private readonly userRepository: Repository<UserEntity>
   ) {}
 
   async findAll(
@@ -120,36 +117,36 @@ export class ArticleService {
     return article;
   }
 
-  async deleteArticleFromFavorites(
-    slug: string,
-    currentUserId: number,
-  ): Promise<ArticleEntity> {
+  // async deleteArticleFromFavorites(
+  //   slug: string,
+  //   currentUserId: number,
+  // ): Promise<ArticleEntity> {
+  //   const article = await this.findBySlug(slug);
+  //   const user = await this.userRepository.findOne(currentUserId, {
+  //     relations: ['favorites'],
+  //   });
+  //
+  //   const articleIndex = user.favorites.findIndex(
+  //     (articleInFavorites) => articleInFavorites.id === article.id,
+  //   );
+  //
+  //   if (articleIndex >= 0) {
+  //     user.favorites.splice(articleIndex, 1);
+  //     article.favoritesCount--;
+  //     await this.userRepository.save(user);
+  //     await this.articleRepository.save(article);
+  //   }
+  //
+  //   return article;
+  // }
+
+  async addPhotoPath(slug, body): Promise<ArticleEntity> {
     const article = await this.findBySlug(slug);
-    const user = await this.userRepository.findOne(currentUserId, {
-      relations: ['favorites'],
-    });
-
-    const articleIndex = user.favorites.findIndex(
-      (articleInFavorites) => articleInFavorites.id === article.id,
-    );
-
-    if (articleIndex >= 0) {
-      user.favorites.splice(articleIndex, 1);
-      article.favoritesCount--;
-      await this.userRepository.save(user);
-      await this.articleRepository.save(article);
+    if (!article) {
+      throw new HttpException('Article not found', HttpStatus.NOT_FOUND);
     }
-
-    return article;
-  }
-
-  async addUserFoto(dto: CreateArticleDto, body: any) {
-    const fileName = await this.fileService.createFile(body);
-    const post = await this.articleRepository.save({
-      ...dto,
-      body: fileName,
-    });
-    return post;
+    Object.assign(article, { body });
+    return await this.articleRepository.save(article);
   }
 
   async updateArticle(
@@ -179,7 +176,17 @@ export class ArticleService {
     if (article.author.id !== currentUserId) {
       throw new HttpException('U r not an author', HttpStatus.FORBIDDEN);
     }
+
+    // TODO delete photo from S3
+
     return await this.articleRepository.delete({ slug });
+  }
+
+  async getEmailsFromDescription( dto: CreateArticleDto): Promise<Array<string>> {
+    const targetUserNames = dto.description.split(' ').filter(item => item.includes('#')).map(item => item.slice(1));
+    const usersForEmail = await this.userRepository.find({where: { username: In(targetUserNames) } })
+
+    return usersForEmail.map(item => item.email);
   }
 
   private getSlug(title: string): string {

@@ -7,7 +7,6 @@ export class CreateArticleDto {
   @IsNotEmpty()
   readonly description: string;
 
-  @IsNotEmpty()
   readonly body: string;
 
   readonly tagList?: string[];
