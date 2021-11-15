@@ -1,0 +1,559 @@
+{
+	"info": {
+		"_postman_id": "7412fb92-19bc-4d4e-bea5-8d322d1130e6",
+		"name": "ALEX my nest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "create user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const jsonBody = JSON.parse(responseBody);",
+									"",
+									"pm.environment.set(\"access_token\", `Token ${jsonBody.user.token}`);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user\":{\r\n    \"email\": \"feden@gmail.com\",\r\n    \"password\": \"jakejake\",\r\n    \"username\": \"fe\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEST}}users",
+							"host": [
+								"{{NEST}}users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const jsonBody = JSON.parse(responseBody);",
+									"",
+									"pm.environment.set(\"access_token\", `Token ${jsonBody.user.token}`);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user\":{\r\n    \"email\": \"test234@m.com\",\r\n    \"password\": \"jakejake\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEST}}users/login",
+							"host": [
+								"{{NEST}}users"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "current user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const jsonBody = JSON.parse(responseBody);",
+									"",
+									"pm.environment.set(\"access_token\", `Token ${jsonBody.user.token}`);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEST}}user",
+							"host": [
+								"{{NEST}}user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update  user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const jsonBody = JSON.parse(responseBody);",
+									"",
+									"pm.environment.set(\"access_token\", `Token ${jsonBody.user.token}`);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user\":{\r\n    \"bio\": \"my first nest!\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEST}}user",
+							"host": [
+								"{{NEST}}user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEST}}user",
+							"host": [
+								"{{NEST}}user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "articles",
+			"item": [
+				{
+					"name": "create article",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "article",
+									"value": "{}",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": "How to train your dragon",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Ever wonder how? #ALEXq1 #feden #qwe #feden",
+									"type": "text"
+								},
+								{
+									"key": "body",
+									"type": "file",
+									"src": "/home/bloodycat/Desktop/photo_2021-11-11_20-52-11.jpg"
+								},
+								{
+									"key": "body",
+									"type": "file",
+									"src": "/home/bloodycat/Desktop/photo_2021-11-11_20-52-11.jpg",
+									"disabled": true
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEST}}articles",
+							"host": [
+								"{{NEST}}articles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single article",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJKYWNvYiIsImVtYWlsIjoiamFrZUBqYWtlLmpha2UiLCJpYXQiOjE2MzY4NTYwNTh9.tfsw5_yYAbVhOqNvkfA6hkXQp7iXwjt5z-7jFS1uTDY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"article\": {\r\n    \"title\": \"How to train your dragon\",\r\n    \"description\": \"Ever wonder how?\",\r\n    \"body\": \"You have to believe\",\r\n    \"tagList\": [\"reactjs\", \"angularjs\", \"dragons\"]\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEST}}articles/how-to-train-your-dragon-m8t71",
+							"host": [
+								"{{NEST}}articles"
+							],
+							"path": [
+								"how-to-train-your-dragon-m8t71"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete single article",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"article\": {\r\n    \"title\": \"How to train your dragon\",\r\n    \"description\": \"Ever wonder how?\",\r\n    \"body\": \"You have to believe\",\r\n    \"tagList\": [\"reactjs\", \"angularjs\", \"dragons\"]\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEST}}articles/how-to-train-your-dragon-k107kz",
+							"host": [
+								"{{NEST}}articles"
+							],
+							"path": [
+								"how-to-train-your-dragon-k107kz"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update single article",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJKYWNvYiIsImVtYWlsIjoiamFrZUBqYWtlLmpha2UiLCJpYXQiOjE2MzY5MDU0MjF9.OMi7hqp7tAjVjoDwzjOV4YigOlitlINk6tQBp6mo0qE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"article\": {\r\n    \"title\": \"How to train your dragon\",\r\n    \"description\": \"Test Ever wonder how?\",\r\n    \"body\": \"You have to believe\",\r\n    \"tagList\": [\"reactjs\", \"angularjs\", \"dragons\"]\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEST}}articles/how-to-train-your-dragon-m8t71",
+							"host": [
+								"{{NEST}}articles"
+							],
+							"path": [
+								"how-to-train-your-dragon-m8t71"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All articles",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJKYWNvYiIsImVtYWlsIjoiamFrZUBqYWtlLmpha2UiLCJpYXQiOjE2MzY5MDU0MjF9.OMi7hqp7tAjVjoDwzjOV4YigOlitlINk6tQBp6mo0qE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"article\": {\r\n    \"title\": \"How to train your dragon\",\r\n    \"description\": \"Test Ever wonder how?\",\r\n    \"body\": \"You have to believe\",\r\n    \"tagList\": [\"reactjs\", \"angularjs\", \"dragons\"]\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEST}}articles",
+							"host": [
+								"{{NEST}}articles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "like articles",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJKYWNvYiIsImVtYWlsIjoiamFrZUBqYWtlLmpha2UiLCJpYXQiOjE2MzY5MTUwMTV9.kHhD85yWst3xx1RlrV-YC7lcoMqJZBHaQ14KiXxlEQQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"article\": {\r\n    \"title\": \"How to train your dragon\",\r\n    \"description\": \"Test Ever wonder how?\",\r\n    \"body\": \"You have to believe\",\r\n    \"tagList\": [\"reactjs\", \"angularjs\", \"dragons\"]\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEST}}articles/how-to-train-your-dragon-do3ay/favorite",
+							"host": [
+								"{{NEST}}articles"
+							],
+							"path": [
+								"how-to-train-your-dragon-do3ay",
+								"favorite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DISlike articles",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJKYWNvYiIsImVtYWlsIjoiamFrZUBqYWtlLmpha2UiLCJpYXQiOjE2MzY5MTUwMTV9.kHhD85yWst3xx1RlrV-YC7lcoMqJZBHaQ14KiXxlEQQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"article\": {\r\n    \"title\": \"How to train your dragon\",\r\n    \"description\": \"Test Ever wonder how?\",\r\n    \"body\": \"You have to believe\",\r\n    \"tagList\": [\"reactjs\", \"angularjs\", \"dragons\"]\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEST}}articles/how-to-train-your-dragon-do3ay/favorite",
+							"host": [
+								"{{NEST}}articles"
+							],
+							"path": [
+								"how-to-train-your-dragon-do3ay",
+								"favorite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List of articles",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJKYWNvYiIsImVtYWlsIjoiamFrZUBqYWtlLmpha2UiLCJpYXQiOjE2MzY5MTUwMTV9.kHhD85yWst3xx1RlrV-YC7lcoMqJZBHaQ14KiXxlEQQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"article\": {\r\n    \"title\": \"How to train your dragon\",\r\n    \"description\": \"Test Ever wonder how?\",\r\n    \"body\": \"You have to believe\",\r\n    \"tagList\": [\"reactjs\", \"angularjs\", \"dragons\"]\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEST}}articles?favorited=Jacob",
+							"host": [
+								"{{NEST}}articles"
+							],
+							"query": [
+								{
+									"key": "favorited",
+									"value": "Jacob"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create foto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{accsess_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "How to train your dragon",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Ever wonder how?",
+									"type": "text"
+								},
+								{
+									"key": "body",
+									"type": "file",
+									"src": "/C:/Users/s21/Desktop/qaq.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{NEST}}articles",
+							"host": [
+								"{{NEST}}articles"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
