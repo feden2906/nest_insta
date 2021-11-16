@@ -1,11 +1,10 @@
 # alpine урізана версія os
 FROM node:14-alpine
 # developer
-MAINTAINER Andrey
+MAINTAINER Alex
 
 # add packege
 RUN apk add bash
-
 # create folder for project
 RUN mkdir /app
 # set default folder for work

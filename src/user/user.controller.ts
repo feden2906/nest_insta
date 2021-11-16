@@ -19,7 +19,6 @@ import { UserEntity } from '@app/shared/db/entities/user/user.entity';
 import { AuthGuard } from '@app/user/guards/auth.guard';
 import { UpdateUserDto } from '@app/user/dto/updateUser.dto';
 import { DeleteResult } from 'typeorm';
-// import { plainToClass } from 'class-transformer';
 
 @Controller()
 export class UserController {
