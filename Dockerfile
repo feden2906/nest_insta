@@ -12,5 +12,6 @@ WORKDIR /app
 
 # copy package.json to folder for work (app)
 COPY ./package.json /app
+COPY ./.env /app
 # install node_modules id production mode
 RUN npm install

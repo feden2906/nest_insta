@@ -21,11 +21,11 @@ import { ConfigModule } from "@nestjs/config";
   imports: [
     TypeOrmModule.forRoot({
       type: "postgres",
-      host: "postgres",
+      host: process.env.POSTGRES_HOST,
       port: 5432,
-      username: "postgres",
-      password: "postgres",
-      database: "postgres",
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DB,
       entities: [__dirname + '/shared/db/entities/**/*.entity.{js,ts}'],
       migrationsTableName: "migration",
       migrations: ["migrations/*.js"],
@@ -46,7 +46,7 @@ import { ConfigModule } from "@nestjs/config";
     UserModule,
     ArticleModule,
     GoogleOauthModule,
-ConfigModule.forRoot()
+// ConfigModule.forRoot()
   ],
   controllers: [AppController, GoogleOauthController],
   providers: [AppService]
