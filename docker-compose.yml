@@ -16,20 +16,20 @@ services:
       - postgres
 
 ## configure front
-#  web:
-#    image: nginx:alpine
-#    ports:
-#      - "80:80"
-#    restart: on-failure
-#    volumes:
-#    - ./build_client:/usr/share/nginx/html
-#    - ./nginx.conf:/etc/nginx/conf.d/default.conf
+  web:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    restart: on-failure
+    volumes:
+    - ./build_client:/usr/share/nginx/html
+    - ./nginx.conf:/etc/nginx/conf.d/default.conf
 
 # configure Postgres
   postgres:
     image: postgres
     ports:
-      - "5433:5432"
+      - "5432:5432"
 
     env_file:
       - .env
