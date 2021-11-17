@@ -33,6 +33,7 @@ export class ArticleEntity {
   @Column()
   tag: string;
 
+
   @Column({ default: 0 })
   favoritesCount: number;
 

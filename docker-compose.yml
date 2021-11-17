@@ -6,7 +6,7 @@ services:
     build:
       context: .
     ports:
-      - "888:3000"
+      - "8888:3000"
     volumes:
       - ./dist:/app/src
     restart: on-failure
@@ -29,7 +29,7 @@ services:
   postgres:
     image: postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
 
     env_file:
       - .env
@@ -38,25 +38,12 @@ services:
       PG_DATA: /var/lib/postgresql/data
 
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ./pgdata:/var/lib/postgresql/data
     restart: on-failure
 
-volumes:
-  pgdata:
+#volumes:
+#  pgdata:
 #    volumes:
 #      - ./mongo-db:/data/db
 #      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 
-
-
-# configure MongoDB
-#  db:
-#    image: mongo
-#    env_file:
-#      - .env
-#    restart: on-failure
-#    ports:
-#      - "27018:27017"
-#    volumes:
-#      - ./mongo-db:/data/db
-#      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro

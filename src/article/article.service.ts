@@ -36,9 +36,8 @@ export class ArticleService {
     }
 
     if (query.tag) {
-      queryBuilder.andWhere('articles.tag = :tag', {
-        tag: `%${query.tag}%`,
-      });
+      const tags = query.tag.split(';');
+      queryBuilder.andWhere('articles.tag IN (:...tags)', { tags });
     }
 
     if (query.favorited) {
@@ -98,11 +97,8 @@ export class ArticleService {
     const user = await this.userRepository.findOne(currentUserId, {
       relations: ['favorites'],
     });
-
-    const isNotFavorited =
-      user.favorites.findIndex(
-        (articleInFavorites) => articleInFavorites.id === article.id,
-      ) === -1;
+    console.log(user);
+    const isNotFavorited = user.favorites.findIndex((articleInFavorites) => articleInFavorites.id === article.id) === -1;
 
     if (isNotFavorited) {
       user.favorites.push(article);

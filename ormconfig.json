@@ -19,5 +19,5 @@
     "query",
     "error"
   ],
-  "synchronize": true
+  "synchronize": false
 }

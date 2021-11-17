@@ -6,7 +6,6 @@ import {
 } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { TagModule } from "@app/tag/tag.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { UserModule } from "./user/user.module";
 import { AuthMiddleware } from "@app/user/middlewares/auth.middleware";
@@ -15,7 +14,6 @@ import { AwsSdkModule } from "nest-aws-sdk";
 import { S3 } from "aws-sdk";
 import { GoogleOauthController } from "./google-oauth/google-oauth.controller";
 import { GoogleOauthModule } from "./google-oauth/google-oauth.module";
-import { ConfigModule } from "@nestjs/config";
 
 @Module({
   imports: [
@@ -42,11 +40,9 @@ import { ConfigModule } from "@nestjs/config";
       },
       services: [S3]
     }),
-    TagModule,
     UserModule,
     ArticleModule,
     GoogleOauthModule,
-// ConfigModule.forRoot()
   ],
   controllers: [AppController, GoogleOauthController],
   providers: [AppService]
