@@ -30,16 +30,13 @@ export class ArticleService {
     const articlesCount = await queryBuilder.getCount();
 
     if (query.author) {
-      const author = await this.userRepository.findOne({
-        username: query.author,
-      });
-      queryBuilder.andWhere('articles.authorId = :id', {
-        id: author.id,
+      queryBuilder.andWhere('articles.author = :id', {
+        id: query.author,
       });
     }
 
     if (query.tag) {
-      queryBuilder.andWhere('articles.taglist LIKE :tag', {
+      queryBuilder.andWhere('articles.tag = :tag', {
         tag: `%${query.tag}%`,
       });
     }
@@ -77,8 +74,8 @@ export class ArticleService {
   ): Promise<ArticleEntity> {
     const article = new ArticleEntity();
     Object.assign(article, createArticleDto);
-    if (!article.tagList) {
-      article.tagList = [];
+    if (!article.tag) {
+      article.tag = '';
     }
     article.slug = this.getSlug(createArticleDto.title);
     article.author = currentUser;
@@ -117,28 +114,28 @@ export class ArticleService {
     return article;
   }
 
-  // async deleteArticleFromFavorites(
-  //   slug: string,
-  //   currentUserId: number,
-  // ): Promise<ArticleEntity> {
-  //   const article = await this.findBySlug(slug);
-  //   const user = await this.userRepository.findOne(currentUserId, {
-  //     relations: ['favorites'],
-  //   });
-  //
-  //   const articleIndex = user.favorites.findIndex(
-  //     (articleInFavorites) => articleInFavorites.id === article.id,
-  //   );
-  //
-  //   if (articleIndex >= 0) {
-  //     user.favorites.splice(articleIndex, 1);
-  //     article.favoritesCount--;
-  //     await this.userRepository.save(user);
-  //     await this.articleRepository.save(article);
-  //   }
-  //
-  //   return article;
-  // }
+  async deleteArticleFromFavorites(
+    slug: string,
+    currentUserId: number,
+  ): Promise<ArticleEntity> {
+    const article = await this.findBySlug(slug);
+    const user = await this.userRepository.findOne(currentUserId, {
+      relations: ['favorites'],
+    });
+
+    const articleIndex = user.favorites.findIndex(
+      (articleInFavorites) => articleInFavorites.id === article.id,
+    );
+
+    if (articleIndex >= 0) {
+      user.favorites.splice(articleIndex, 1);
+      article.favoritesCount--;
+      await this.userRepository.save(user);
+      await this.articleRepository.save(article);
+    }
+
+    return article;
+  }
 
   async addPhotoPath(slug, body): Promise<ArticleEntity> {
     const article = await this.findBySlug(slug);

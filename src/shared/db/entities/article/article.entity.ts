@@ -30,8 +30,8 @@ export class ArticleEntity {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
 
-  @Column('simple-array')
-  tagList: string[];
+  @Column()
+  tag: string;
 
   @Column({ default: 0 })
   favoritesCount: number;

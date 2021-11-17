@@ -9,5 +9,5 @@ export class CreateArticleDto {
 
   readonly body: string;
 
-  readonly tagList?: string[];
+  readonly tag?: string;
 }

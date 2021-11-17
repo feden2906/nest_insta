@@ -118,7 +118,7 @@ export class ArticleController {
     @User("id") currentUserId: number,
     @Param("slug") slug: string
   ): Promise<ArticleResponseInterface> {
-    const article = await this.articleService.addArticleToFavorites(
+    const article = await this.articleService.deleteArticleFromFavorites(
       slug,
       currentUserId
     );

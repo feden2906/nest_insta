@@ -28,7 +28,7 @@ import { ConfigModule } from "@nestjs/config";
       database: process.env.POSTGRES_DB,
       entities: [__dirname + '/shared/db/entities/**/*.entity.{js,ts}'],
       migrationsTableName: "migration",
-      migrations: ["migrations/*.js"],
+      migrations: [__dirname + "/migrations/*.js"],
       cli: {
         migrationsDir: "src/migrations"
       },
