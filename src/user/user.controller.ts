@@ -1,15 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Post,
-  Put,
-  Request,
-  UseGuards,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put, Request, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UserService } from '@app/user/user.service';
 import { CreateUserDto } from '@app/user/dto/createUser.dto';
 import { UserResponseInterface } from '@app/user/types/userResponse.interface';
@@ -27,7 +16,7 @@ export class UserController {
   @Post('users')
   @UsePipes(new ValidationPipe())
   async createUsers(
-    @Body('user') createUserDto: CreateUserDto,
+    @Body('user') createUserDto: CreateUserDto
   ): Promise<UserResponseInterface> {
     const user = await this.userService.createUser(createUserDto);
     return this.userService.buildUserResponce(user);
@@ -36,20 +25,16 @@ export class UserController {
   @Post('users/login')
   @UsePipes(new ValidationPipe())
   async login(
-    @Body('user') loginUserDto: LoginUserDto,
+    @Body('user') loginUserDto: LoginUserDto
   ): Promise<UserResponseInterface> {
     const user = await this.userService.login(loginUserDto);
-    // const a = plainToClass(LoginUserDto, user, {
-    //   excludeExtraneousValues: true,
-    // });
     return this.userService.buildUserResponce(user);
   }
 
   @Get('user')
   @UseGuards(AuthGuard)
   async currentUser(
-    @User() user: UserEntity,
-    // @User('id') currentUserId: number,
+    @User() user: UserEntity
   ): Promise<UserResponseInterface> {
     return this.userService.buildUserResponce(user);
   }
@@ -58,11 +43,11 @@ export class UserController {
   @UseGuards(AuthGuard)
   async updateCurrentUser(
     @User('id') currentUserId: number,
-    @Body('user') updateUserDto: UpdateUserDto,
+    @Body('user') updateUserDto: UpdateUserDto
   ): Promise<UserResponseInterface> {
     const user = await this.userService.updateUser(
       currentUserId,
-      updateUserDto,
+      updateUserDto
     );
     return this.userService.buildUserResponce(user);
   }

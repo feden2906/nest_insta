@@ -4,8 +4,8 @@ import { ArticleService } from './article.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ArticleEntity } from '@app/shared/db/entities/article/article.entity';
 import { UserEntity } from '@app/shared/db/entities/user/user.entity';
-import { S3ManagerModule } from "@app/s3-manager/s3-manager.module";
-import { UserMailerModule } from "@app/user-mailer/user-mailer.module";
+import { S3ManagerModule } from '@app/s3-manager/s3-manager.module';
+import { UserMailerModule } from '@app/user-mailer/user-mailer.module';
 
 @Module({
   imports: [
@@ -14,6 +14,6 @@ import { UserMailerModule } from "@app/user-mailer/user-mailer.module";
     UserMailerModule
   ],
   controllers: [ArticleController],
-  providers: [ArticleService],
+  providers: [ArticleService]
 })
 export class ArticleModule {}

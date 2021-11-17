@@ -1,36 +1,23 @@
 import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  Query,
-  UploadedFile,
-  UseGuards,
-  UseInterceptors,
-  UsePipes,
-  ValidationPipe
-} from "@nestjs/common";
-import { ArticleService } from "@app/article/article.service";
-import { AuthGuard } from "@app/user/guards/auth.guard";
-import { User } from "@app/user/decorators/user.decorator";
-import { UserEntity } from "@app/shared/db/entities/user/user.entity";
-import { CreateArticleDto } from "@app/article/dto/createArticle.dto";
-import { ArticleResponseInterface } from "@app/article/types/articleResponse.interface";
-import { ArticlesResponseInterface } from "@app/article/types/articlesResponse.interface";
-import { FileInterceptor } from "@nestjs/platform-express";
-import { Express } from "express";
-import { S3ManagerService } from "@app/s3-manager/s3-manager.service";
-import { UserMailerService } from "@app/user-mailer/user-mailer.service";
+  Body, Controller, Delete, Get, Param, Post, Put, Query, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe
+} from '@nestjs/common';
+import { ArticleService } from '@app/article/article.service';
+import { AuthGuard } from '@app/user/guards/auth.guard';
+import { User } from '@app/user/decorators/user.decorator';
+import { UserEntity } from '@app/shared/db/entities/user/user.entity';
+import { CreateArticleDto } from '@app/article/dto/createArticle.dto';
+import { ArticleResponseInterface } from '@app/article/types/articleResponse.interface';
+import { ArticlesResponseInterface } from '@app/article/types/articlesResponse.interface';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Express } from 'express';
+import { S3ManagerService } from '@app/s3-manager/s3-manager.service';
+import { UserMailerService } from '@app/user-mailer/user-mailer.service';
 
 @Controller("articles")
 export class ArticleController {
   constructor(private readonly articleService: ArticleService,
               private readonly s3ManagerService: S3ManagerService,
-              private readonly userMailerService: UserMailerService) {
-  }
+              private readonly userMailerService: UserMailerService) {}
 
   @Get()
   async findAll(
@@ -57,7 +44,6 @@ export class ArticleController {
     const emailArr = await this.articleService.getEmailsFromDescription(createArticleDto);
 
     const promises = emailArr.map(async (email) => await this.userMailerService.sendEmailAdd(email));
-
     await Promise.allSettled(promises);
 
     const filePath = await this.s3ManagerService.listBucketContents(body, currentUser.id);

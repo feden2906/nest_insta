@@ -9,5 +9,7 @@ export class CreateArticleDto {
 
   readonly body: string;
 
+  readonly filterForBody: string;
+
   readonly tag?: string;
 }

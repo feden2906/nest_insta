@@ -3,7 +3,7 @@ import { UserEntity } from '@app/shared/db/entities/user/user.entity';
 import { CreateArticleDto } from '@app/article/dto/createArticle.dto';
 import { ArticleEntity } from '@app/shared/db/entities/article/article.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, getRepository, In, Repository } from "typeorm";
+import { DeleteResult, getRepository, In, Repository } from 'typeorm';
 import { ArticleResponseInterface } from '@app/article/types/articleResponse.interface';
 import slugify from 'slugify';
 import { ArticlesResponseInterface } from '@app/article/types/articlesResponse.interface';
@@ -97,10 +97,10 @@ export class ArticleService {
     const user = await this.userRepository.findOne(currentUserId, {
       relations: ['favorites'],
     });
-    console.log(user);
-    const isNotFavorited = user.favorites.findIndex((articleInFavorites) => articleInFavorites.id === article.id) === -1;
 
-    if (isNotFavorited) {
+    const isNotFavorited = user.favorites.some((articleInFavorites) => articleInFavorites.id === article.id);
+
+    if (!isNotFavorited) {
       user.favorites.push(article);
       article.favoritesCount++;
       await this.userRepository.save(user);
@@ -119,12 +119,10 @@ export class ArticleService {
       relations: ['favorites'],
     });
 
-    const articleIndex = user.favorites.findIndex(
-      (articleInFavorites) => articleInFavorites.id === article.id,
-    );
+    const articleIndex = user.favorites.some((articleInFavorites) => articleInFavorites.id === article.id);
 
-    if (articleIndex >= 0) {
-      user.favorites.splice(articleIndex, 1);
+    if (articleIndex) {
+      user.favorites = user.favorites.filter((articleInFavorites) => articleInFavorites.id !== article.id);
       article.favoritesCount--;
       await this.userRepository.save(user);
       await this.articleRepository.save(article);
