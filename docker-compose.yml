@@ -6,7 +6,7 @@ services:
     build:
       context: .
     ports:
-      - "8888:3000"
+      - "888:3000"
     volumes:
       - ./dist:/app/src
     restart: on-failure
