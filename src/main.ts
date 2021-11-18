@@ -9,8 +9,10 @@ if (!process.env.IS_TS_NODE) {
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // BETTER FOR FRONT, U CAN CHANGE THIS
   app.setGlobalPrefix('api');
 
+  // SIMPLE SWAGGER
   const config = new DocumentBuilder()
     .setTitle('My first NESTjs')
     .setDescription('documentation REST API')

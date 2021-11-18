@@ -10,6 +10,7 @@ import { S3 } from 'aws-sdk';
 import { GoogleOauthController } from './google-oauth/google-oauth.controller';
 import { GoogleOauthModule } from './google-oauth/google-oauth.module';
 
+//MY TYPEORM(psql), AWS and other
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -42,6 +43,7 @@ import { GoogleOauthModule } from './google-oauth/google-oauth.module';
   controllers: [AppController, GoogleOauthController],
   providers: [AppService]
 })
+// user/middlewares/auth.middleware.ts FOR headers.authorization
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(AuthMiddleware).forRoutes({
