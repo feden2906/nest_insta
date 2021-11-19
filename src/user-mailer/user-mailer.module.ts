@@ -13,7 +13,8 @@ import { MailerModule } from '@nestjs-modules/mailer';
           secure: false,
           auth: {
             user: process.env.MAIL_USER,
-            pass: process.env.MAIL_PASWORD
+            pass: process.env.MAIL_PASWORD,
+            accessToken: process.env.MAIL_ACCESS_TOKEN
           }
         }
       })
