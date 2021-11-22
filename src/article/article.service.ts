@@ -21,7 +21,7 @@ export class ArticleService {
     currentUserId: number,
     query: any,
   ): Promise<ArticlesResponseInterface> {
-    const queryBuilder = getRepository(ArticleEntity)
+    const queryBuilder = getRepository(ArticleEntity)                 // todo DOC https://github.com/typeorm/typeorm/blob/master/docs/select-query-builder.md
       .createQueryBuilder('articles')
       .leftJoinAndSelect('articles.author', 'author');
 
