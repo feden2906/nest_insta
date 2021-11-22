@@ -27,6 +27,7 @@ export class UserEntity {
     this.password = await hash(this.password, 10);
   }
 
+  // todo DOC https://github.com/typeorm/typeorm/blob/master/docs/relations.md
   @OneToMany(() => ArticleEntity, (article) => article.author)
   articles: ArticleEntity[];
 
