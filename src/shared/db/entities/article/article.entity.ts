@@ -44,6 +44,7 @@ export class ArticleEntity {
     this.updatedAt = new Date();
   }
 
+  // todo DOC https://github.com/typeorm/typeorm/blob/master/docs/relations.md
   @ManyToOne(() => UserEntity, (user) => user.articles, { eager: true })
   author: UserEntity;
 }
